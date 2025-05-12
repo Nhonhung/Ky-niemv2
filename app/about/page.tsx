@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import ParticleBackground from "@/components/particle-background"
+import { sub } from "date-fns"
 
 export default function AboutPage() {
   const fadeIn = {
@@ -18,22 +19,94 @@ export default function AboutPage() {
 
   const teachers = [
     {
-      name: "Cô Phạm Thị Xinh",
+      name: "Cô Xinh",
       role: "Giáo viên chủ nhiệm",
       subject: "Tiếng Anh",
       image: "/Imagehs/had.jpg",
     },
     {
-      name: "LEAK T A",
+      name: "Cô Tuyên",
       role: "Giáo viên bộ môn",
-      subject: "Toán học",
+      subject: "Hóa học",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Thầy Dũng",
+      role: "Giáo viên bộ môn",
+      subject: "Trải nghiệm hướng nghiệp",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Thầy Lâm",
+      role: "Giáo viên bộ môn",
+      subject: "Mĩ thuật",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Cô Phượng",
+      role: "Giáo viên bộ môn",
+      subject: "Âm nhạc",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Cô Giang",
+      role: "Giáo viên bộ môn",
+      subject: "Toán Học",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Thầy Hưng",
+      role: "Giáo viên bộ môn",
+      subject: "Sinh học, thể dục",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Thầy Trung",
+      role: "Giáo viên bộ môn",
+      subject: "Vật lý",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Cô Hoàng",
+      role: "Giáo viên bộ môn",
+      subject: "Địa Lí",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Thầy Hiện",
+      role: "Giáo viên bộ môn",
+      subject: "Công nghệ",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Cô Thu",
+      role: "Giáo viên bộ môn",
+      subject: "Lịch sử",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Thầy Phúc",
+      role: "Giáo viên bộ môn",
+      subject: "GDCD, GDĐP",
+      image: "/Imagehs/had.jpg",
+    },
+    {
+      name: "Cô Triệu Vân",
+      role: "Giáo viên bộ môn",
+      subject: "Tin Học",
       image: "/Imagehs/had.jpg",
     },
     {
       name: "LEAK T A",
-      role: "Giáo viên bộ môn",
-      subject: "Tin học",
-      image: "/Imagehs/had.jpg",
+      role: "Make and Own website",
+      subject: "Web development",
+      image: "/Imagehs/ZLS1.jpeg",
+    },
+    {
+      name: "ZLS",
+      role: "Collaborated with LEAK T A",
+      subject: "Web development",
+      image: "/Imagehs/ZLS3.jpeg",
     },
   ]
 

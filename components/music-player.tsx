@@ -11,7 +11,7 @@ export default function MusicPlayer() {
   useEffect(() => {
     setMounted(true)
     // Create audio element
-    audioRef.current = new Audio("/M-web.mp3")  // Đường dẫn đến file nhạc của bạn
+    audioRef.current = new Audio("/S-web.mp3")  // Đường dẫn đến file nhạc của bạn
     audioRef.current.loop = true
     audioRef.current.volume = 0.5
     

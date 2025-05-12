@@ -29,7 +29,7 @@ export default function MembersPage() {
       id: 2,
       name: "Phạm Đức Thịnh",
       nickname: "ZLS",
-      avatar: "/Imagehs/tui1.jpg",
+      avatar: "/Imagehs/ZLS4.jpeg",
       role: "Học sinh Signature",
       hobbies: ["Coder", "Exploit", "Learning", "C++", "Lua"],
       quote: "Chill với cuộc sống",

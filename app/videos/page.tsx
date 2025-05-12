@@ -10,7 +10,7 @@ export default function VideosPage() {
       id: 1,
       title: "Kỷ niệm ngày học cuối cùng",
       description: "Những khoảnh khắc đáng nhớ trong ngày học cuối cùng của lớp 9A1",
-      thumbnail: "/Imagehs/pxb8.jpg",
+      thumbnail: "/Imagehs/had.jpg",
       youtubeId: "j3KCob5TbMk", // Replace with actual YouTube ID
     },
     {

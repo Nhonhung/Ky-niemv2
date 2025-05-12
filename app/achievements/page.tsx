@@ -10,21 +10,21 @@ export default function AchievementsPage() {
     {
       id: 1,
       title: "Lớp xuất sắc nhất khối",
-      year: "2022-2023",
+      year: "NONE",
       description: "Đạt danh hiệu lớp xuất sắc nhất khối 9 với thành tích học tập và hoạt động ngoại khóa nổi bật.",
       icon: <Trophy className="text-yellow-400" size={24} />,
     },
     {
       id: 2,
       title: "Giải nhất cuộc thi văn nghệ cấp trường",
-      year: "2022",
+      year: "NONE",
       description: "Tiết mục 'Tuổi học trò' đạt giải nhất cuộc thi văn nghệ chào mừng ngày Nhà giáo Việt Nam 20/11.",
       icon: <Medal className="text-yellow-400" size={24} />,
     },
     {
       id: 3,
       title: "Giải nhì cuộc thi thể thao cấp trường",
-      year: "2022",
+      year: "NONE",
       description: "Đội bóng đá nam của lớp đạt giải nhì trong giải bóng đá học sinh cấp trường.",
       icon: <Award className="text-yellow-400" size={24} />,
     },
@@ -33,64 +33,64 @@ export default function AchievementsPage() {
   const studentAchievements = [
     {
       id: 1,
-      name: "Nguyễn Văn A",
+      name: "ZLS",
       achievements: [
         {
           title: "Học sinh xuất sắc",
-          year: "2022-2023",
+          year: "NONE",
           description: "Đạt danh hiệu học sinh xuất sắc toàn diện cấp trường.",
         },
         {
           title: "Giải nhất Olympic Toán cấp quận",
-          year: "2022",
+          year: "NONE",
           description: "Đạt giải nhất cuộc thi Olympic Toán học cấp quận.",
         },
       ],
     },
     {
       id: 2,
-      name: "Trần Thị B",
+      name: "ZLS",
       achievements: [
         {
           title: "Học sinh giỏi Văn cấp thành phố",
-          year: "2023",
+          year: "NONE",
           description: "Đạt giải nhì học sinh giỏi môn Văn cấp thành phố.",
         },
         {
           title: "Giải nhất cuộc thi viết văn",
-          year: "2022",
+          year: "NONE",
           description: "Đạt giải nhất cuộc thi viết văn 'Tuổi trẻ tài cao' cấp quận.",
         },
       ],
     },
     {
       id: 3,
-      name: "Lê Văn C",
+      name: "ZLS",
       achievements: [
         {
           title: "Giải nhất cuộc thi hát",
-          year: "2023",
+          year: "NONE",
           description: "Đạt giải nhất cuộc thi giọng hát hay cấp trường.",
         },
         {
           title: "Thành viên đội tuyển văn nghệ",
-          year: "2022-2023",
+          year: "NONE",
           description: "Là thành viên nòng cốt của đội tuyển văn nghệ trường.",
         },
       ],
     },
     {
       id: 4,
-      name: "Phạm Thị D",
+      name: "ZLS",
       achievements: [
         {
-          title: "Học sinh giỏi Tiếng Anh",
-          year: "2023",
+          title: "Giải ba học sinh giỏi Tiếng Anh cấp thành phố",
+          year: "NONE",
           description: "Đạt giải ba học sinh giỏi môn Tiếng Anh cấp thành phố.",
         },
         {
           title: "Chứng chỉ IELTS 7.0",
-          year: "2022",
+          year: "NONE",
           description: "Đạt chứng chỉ IELTS 7.0 khi mới học lớp 9.",
         },
       ],

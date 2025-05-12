@@ -148,7 +148,7 @@ export default function Home() {
                   >
                     <div className="relative overflow-hidden">
                       <img
-                        src={`/Imagehs/chadedit.jpeg`}
+                        src={`/Imagehs/chad2.jpeg`}
                         alt={`Kỷ niệm ${item}`}
                         className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                       />
