@@ -1,2 +1,1 @@
-# Ky-niem.
-# Ky-niem1
+# Ky-niem-
