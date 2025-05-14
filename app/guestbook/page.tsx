@@ -1,58 +1,79 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Send, MessageSquare, User, Calendar } from "lucide-react"
 import ParticleBackground from "@/components/particle-background"
+import { db } from "@/lib/firebase"
+import { collection, addDoc, getDocs, query, orderBy, Timestamp } from "firebase/firestore"
+
+interface GuestbookEntry {
+  id: string
+  name: string
+  message: string
+  date: string
+}
 
 export default function GuestbookPage() {
   const [name, setName] = useState("")
   const [message, setMessage] = useState("")
   const [submitted, setSubmitted] = useState(false)
+  const [entries, setEntries] = useState<GuestbookEntry[]>([])
 
-  // Sample guestbook entries
-  const [entries, setEntries] = useState([
-    {
-      id: 1,
-      name: "ZLS",
-      message: "Trang kỷ yếu rất đẹp và ý nghĩa. Chúc các bạn lớp 9A1 luôn thành công và hạnh phúc!",
-      date: "2023-05-15",
-    },
-    {
-      id: 2,
-      name: "ZLS",
-      message: "Nhìn lại những kỷ niệm của các bạn, mình cũng nhớ về thời học sinh của mình. Giữ gìn tình bạn nhé!",
-      date: "2023-05-10",
-    },
-    {
-      id: 3,
-      name: "ZLS",
-      message: "Trang web thiết kế rất đẹp, hiệu ứng mượt mà. Chúc các bạn có nhiều kỷ niệm đẹp hơn nữa!",
-      date: "2023-05-05",
-    },
-  ])
+  // Lấy dữ liệu từ Firestore khi component được tải
+  useEffect(() => {
+    const fetchEntries = async () => {
+      try {
+        const q = query(collection(db, "guestbook"), orderBy("createdAt", "desc"))
+        const querySnapshot = await getDocs(q)
+        const fetchedEntries: GuestbookEntry[] = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          name: doc.data().name,
+          message: doc.data().message,
+          date: doc.data().createdAt.toDate().toISOString().split("T")[0],
+        }))
+        setEntries(fetchedEntries)
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu từ guestbook:", error)
+      }
+    }
 
-  const handleSubmit = (e: React.FormEvent) => {
+    fetchEntries()
+  }, [])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (name.trim() === "" || message.trim() === "") return
 
-    const newEntry = {
-      id: entries.length + 1,
-      name,
-      message,
-      date: new Date().toISOString().split("T")[0],
+    try {
+      const newEntry = {
+        name,
+        message,
+        createdAt: Timestamp.now(),
+      }
+
+      // Lưu vào Firestore
+      const docRef = await addDoc(collection(db, "guestbook"), newEntry)
+      setEntries([
+        {
+          id: docRef.id,
+          name,
+          message,
+          date: new Date().toISOString().split("T")[0],
+        },
+        ...entries,
+      ])
+      setName("")
+      setMessage("")
+      setSubmitted(true)
+
+      setTimeout(() => {
+        setSubmitted(false)
+      }, 3000)
+    } catch (error) {
+      console.error("Lỗi khi lưu tin nhắn:", error)
     }
-
-    setEntries([newEntry, ...entries])
-    setName("")
-    setMessage("")
-    setSubmitted(true)
-
-    setTimeout(() => {
-      setSubmitted(false)
-    }, 3000)
   }
 
   return (

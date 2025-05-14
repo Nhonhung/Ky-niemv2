@@ -17,7 +17,9 @@ export default function ParticleBackground() {
   }, [])
 
   const particlesLoaded = useCallback(async (container: Container | undefined) => {
-    // You can add custom code here when particles are loaded
+    if (container) {
+      console.log("Particles container initialized:", container)
+    }
   }, [])
 
   if (!mounted) {
@@ -48,30 +50,30 @@ export default function ParticleBackground() {
                 value: "Z",
                 font: "Arial",
                 style: "bold",
-                weight: "bold"
-              }
+                weight: "bold",
+              },
             },
             opacity: {
               value: 0.8,
               random: true,
-              anim: {
+              animation: { // Thay anim thành animation
                 enable: true,
                 speed: 1,
-                opacity_min: 0.4,
+                minimumValue: 0.4, // Thay opacity_min thành minimumValue
                 sync: false,
               },
             },
             size: {
-              value: 25, // Kích thước lớn hơn để chữ Z dễ nhìn
+              value: 25, // Giữ nguyên kích thước chữ Z
               random: true,
-              anim: {
+              animation: { // Thay anim thành animation
                 enable: true,
                 speed: 2,
-                size_min: 15,
+                minimumValue: 15, // Thay size_min thành minimumValue
                 sync: false,
               },
             },
-            line_linked: {
+            links: { // Thay line_linked thành links
               enable: true,
               distance: 150,
               color: "#ffffff",
@@ -84,7 +86,7 @@ export default function ParticleBackground() {
               direction: "none",
               random: false,
               straight: false,
-              out_mode: "out",
+              outMode: "out", // Thay out_mode thành outMode
               bounce: false,
               attract: {
                 enable: false,
@@ -94,13 +96,13 @@ export default function ParticleBackground() {
             },
           },
           interactivity: {
-            detect_on: "canvas",
+            detectsOn: "canvas", // Thay detect_on thành detectsOn
             events: {
-              onhover: {
+              onHover: { // Thay onhover thành onHover
                 enable: true,
                 mode: "grab",
               },
-              onclick: {
+              onClick: { // Thay onclick thành onClick
                 enable: true,
                 mode: "push",
               },
@@ -109,16 +111,16 @@ export default function ParticleBackground() {
             modes: {
               grab: {
                 distance: 140,
-                line_linked: {
+                links: { // Thay line_linked thành links
                   opacity: 0.8,
                 },
               },
               push: {
-                particles_nb: 4,
-              }
+                quantity: 4, // Thay particles_nb thành quantity
+              },
             },
           },
-          retina_detect: true,
+          detectRetina: true, // Thay retina_detect thành detectRetina
           background: {
             color: "#0a0a29",
             image: "",
