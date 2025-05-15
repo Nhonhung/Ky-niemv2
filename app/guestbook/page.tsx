@@ -1,12 +1,18 @@
 "use client"
 
-import type React from "react"
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Send, MessageSquare, User, Calendar } from "lucide-react"
 import ParticleBackground from "@/components/particle-background"
 import { db } from "@/lib/firebase"
-import { collection, addDoc, getDocs, query, orderBy, Timestamp } from "firebase/firestore"
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  Timestamp,
+  onSnapshot,
+} from "firebase/firestore"
 
 interface GuestbookEntry {
   id: string
@@ -21,25 +27,19 @@ export default function GuestbookPage() {
   const [submitted, setSubmitted] = useState(false)
   const [entries, setEntries] = useState<GuestbookEntry[]>([])
 
-  // Lấy dữ liệu từ Firestore khi component được tải
   useEffect(() => {
-    const fetchEntries = async () => {
-      try {
-        const q = query(collection(db, "guestbook"), orderBy("createdAt", "desc"))
-        const querySnapshot = await getDocs(q)
-        const fetchedEntries: GuestbookEntry[] = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          name: doc.data().name,
-          message: doc.data().message,
-          date: doc.data().createdAt.toDate().toISOString().split("T")[0],
-        }))
-        setEntries(fetchedEntries)
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu từ guestbook:", error)
-      }
-    }
+    const q = query(collection(db, "guestbook"), orderBy("createdAt", "desc"))
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const fetched: GuestbookEntry[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        name: doc.data().name,
+        message: doc.data().message,
+        date: doc.data().createdAt?.toDate().toLocaleDateString("vi-VN") || "",
+      }))
+      setEntries(fetched)
+    })
 
-    fetchEntries()
+    return () => unsubscribe()
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -47,32 +47,18 @@ export default function GuestbookPage() {
     if (name.trim() === "" || message.trim() === "") return
 
     try {
-      const newEntry = {
+      await addDoc(collection(db, "guestbook"), {
         name,
         message,
         createdAt: Timestamp.now(),
-      }
+      })
 
-      // Lưu vào Firestore
-      const docRef = await addDoc(collection(db, "guestbook"), newEntry)
-      setEntries([
-        {
-          id: docRef.id,
-          name,
-          message,
-          date: new Date().toISOString().split("T")[0],
-        },
-        ...entries,
-      ])
       setName("")
       setMessage("")
       setSubmitted(true)
-
-      setTimeout(() => {
-        setSubmitted(false)
-      }, 3000)
-    } catch (error) {
-      console.error("Lỗi khi lưu tin nhắn:", error)
+      setTimeout(() => setSubmitted(false), 3000)
+    } catch (err) {
+      console.error("Error submitting entry:", err)
     }
   }
 
@@ -91,7 +77,6 @@ export default function GuestbookPage() {
         </motion.h1>
 
         <div className="max-w-4xl mx-auto">
-          {/* Comment Form */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -99,8 +84,8 @@ export default function GuestbookPage() {
             className="bg-gradient-to-br from-purple-900/40 to-pink-900/40 backdrop-blur-md rounded-xl p-6 mb-12 border border-purple-500/20"
           >
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-              <MessageSquare className="mr-3" size={24} />
-              Để Lại Lời Nhắn
+              <MessageSquare className="mr-3" />
+              Để lại lời nhắn
             </h2>
 
             <form onSubmit={handleSubmit}>
@@ -109,12 +94,11 @@ export default function GuestbookPage() {
                   Tên của bạn
                 </label>
                 <input
-                  type="text"
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-2 rounded-lg bg-white/10 border border-purple-500/30 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
-                  placeholder="Nhập tên của bạn"
+                  placeholder="Nhập tên..."
                   required
                 />
               </div>
@@ -127,8 +111,8 @@ export default function GuestbookPage() {
                   id="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-purple-500/30 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50 min-h-[120px]"
-                  placeholder="Nhập lời nhắn của bạn"
+                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-purple-500/30 text-white placeholder-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50 min-h-[100px]"
+                  placeholder="Nhập lời nhắn..."
                   required
                 ></textarea>
               </div>
@@ -151,15 +135,13 @@ export default function GuestbookPage() {
                 transition={{ duration: 0.3 }}
                 className="mt-4 p-3 bg-green-500/20 border border-green-500/30 rounded-lg text-green-200"
               >
-                Cảm ơn bạn đã để lại lời nhắn!
+                Cảm ơn bạn đã gửi lời nhắn!
               </motion.div>
             )}
           </motion.div>
 
-          {/* Comments List */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-white mb-6">Lời Nhắn Từ Mọi Người</h2>
-
+            <h2 className="text-2xl font-bold text-white mb-6">Lời nhắn từ mọi người</h2>
             {entries.map((entry, index) => (
               <motion.div
                 key={entry.id}
